@@ -1,0 +1,97 @@
+[
+  {
+    "id": 1,
+    "name": "Hand-Painted Madhubani Art",
+    "artist": {
+      "name": "Sita Devi",
+      "image": "https://images.unsplash.com/photo-1494790108755-2616b4e2d81d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      "bio": "Sita Devi is a master artist from Madhubani, Bihar, with over 25 years of experience in traditional Madhubani painting. She has won several state awards and her works are displayed in museums across India.",
+      "location": "Madhubani, Bihar",
+      "rating": 4.9,
+      "totalReviews": 342,
+      "worksCreated": 156
+    },
+    "state": "Bihar",
+    "price": 4500,
+    "originalPrice": 6000,
+    "rating": 4.8,
+    "reviews": 124,
+    "images": [
+      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1576086213369-97a306d36557?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    ],
+    "category": "Paintings",
+    "featured": true,
+    "description": "This exquisite Madhubani painting showcases the traditional folk art of Bihar, featuring intricate geometric patterns and vibrant colors that tell ancient stories.",
+    "features": [
+      "100% Hand-painted with natural pigments",
+      "Traditional Madhubani art style from Bihar",
+      "Dimensions: 16\" x 12\" on handmade paper",
+      "Includes certificate of authenticity",
+      "Ready to frame"
+    ],
+    "specifications": {
+      "Medium": "Natural pigments on handmade paper",
+      "Style": "Traditional Madhubani",
+      "Dimensions": "16\" x 12\"",
+      "Origin": "Madhubani, Bihar",
+      "Artist": "Sita Devi",
+      "Year": "2024"
+    },
+    "inStock": true,
+    "stockCount": 3,
+    "deliveryInfo": {
+      "standard": "5-7 business days",
+      "express": "2-3 business days",
+      "freeShipping": true
+    }
+  },
+  {
+    "id": 2,
+    "name": "Blue Pottery Decorative Bowl",
+    "artist": {
+      "name": "Kripal Singh",
+      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+      "bio": "Kripal Singh is a renowned blue pottery artist from Jaipur, Rajasthan. His family has been practicing this art form for over 100 years, and he continues the tradition with contemporary designs.",
+      "location": "Jaipur, Rajasthan",
+      "rating": 4.7,
+      "totalReviews": 287,
+      "worksCreated": 89
+    },
+    "state": "Rajasthan",
+    "price": 2200,
+    "originalPrice": 2800,
+    "rating": 4.6,
+    "reviews": 89,
+    "images": [
+      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    ],
+    "category": "Ceramics",
+    "featured": false,
+    "description": "A beautiful blue pottery decorative bowl featuring traditional Rajasthani patterns. Perfect for home decor or serving.",
+    "features": [
+      "Traditional blue pottery from Jaipur",
+      "Hand-glazed ceramic with intricate patterns",
+      "Diameter: 8 inches, Height: 3 inches",
+      "Food-safe and functional",
+      "Microwave safe"
+    ],
+    "specifications": {
+      "Medium": "Ceramic with blue glaze",
+      "Style": "Traditional Rajasthani Blue Pottery",
+      "Dimensions": "8\" diameter x 3\" height",
+      "Origin": "Jaipur, Rajasthan",
+      "Artist": "Kripal Singh",
+      "Year": "2024"
+    },
+    "inStock": true,
+    "stockCount": 7,
+    "deliveryInfo": {
+      "standard": "5-7 business days",
+      "express": "2-3 business days",
+      "freeShipping": false
+    }
+  }
+]

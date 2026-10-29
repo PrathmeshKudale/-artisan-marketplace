@@ -1,0 +1,112 @@
+[
+  {
+    "id": "weaving-basics",
+    "title": "Handloom Weaving Basics",
+    "artisan": "Sarla Devi",
+    "level": "Beginner",
+    "price": 199,
+    "duration": "60 min",
+    "poster": "https://images.unsplash.com/photo-1611955167811-4711904bb9b8?q=80&w=1920&auto=format&fit=crop",
+    "video": "https://cdn.builder.io/o/assets%2Ff1ce823622ae4b55a2cc7cc1ca8532c5%2Fe86a8089deb84d51bc4eece9e992bbc0?alt=media&token=e0941836-4c77-4002-ad9b-f8e4acd786a5&apiKey=f1ce823622ae4b55a2cc7cc1ca8532c5",
+    "blurb": "Learn the foundations of handloom weaving, from setting the warp to basic weft patterns you can practice at home."
+  },
+  {
+    "id": "terracotta-101",
+    "title": "Terracotta Pottery 101",
+    "artisan": "Ramesh Kumar",
+    "level": "Beginner",
+    "price": 299,
+    "duration": "75 min",
+    "poster": "https://images.unsplash.com/photo-1518131678677-a9e0c2d4a8c1?q=80&w=1920&auto=format&fit=crop",
+    "video": "https://cdn.builder.io/o/assets%2Ff1ce823622ae4b55a2cc7cc1ca8532c5%2Fe86a8089deb84d51bc4eece9e992bbc0?alt=media&token=e0941836-4c77-4002-ad9b-f8e4acd786a5&apiKey=f1ce823622ae4b55a2cc7cc1ca8532c5",
+    "blurb": "Shape, carve, and fire your first terracotta piece under the guidance of an experienced artisan potter."
+  },
+  {
+    "id": "warli-masterclass",
+    "title": "Warli Painting Masterclass",
+    "artisan": "Meera Patil",
+    "level": "Intermediate",
+    "price": 450,
+    "duration": "90 min",
+    "poster": "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=1920&auto=format&fit=crop",
+    "video": "https://cdn.builder.io/o/assets%2Ff1ce823622ae4b55a2cc7cc1ca8532c5%2Fe86a8089deb84d51bc4eece9e992bbc0?alt=media&token=e0941836-4c77-4002-ad9b-f8e4acd786a5&apiKey=f1ce823622ae4b55a2cc7cc1ca8532c5",
+    "blurb": "Discover motifs, storytelling, and composition to create your own Warli artwork from scratch."
+  },
+  {
+    "id": "block-printing",
+    "title": "Block Printing at Home",
+    "artisan": "Kavita Joshi",
+    "level": "Beginner",
+    "price": 149,
+    "duration": "45 min",
+    "poster": "https://images.unsplash.com/photo-1604882357860-1c8944a75151?q=80&w=1920&auto=format&fit=crop",
+    "video": "https://cdn.builder.io/o/assets%2Ff1ce823622ae4b55a2cc7cc1ca8532c5%2Fe86a8089deb84d51bc4eece9e992bbc0?alt=media&token=e0941836-4c77-4002-ad9b-f8e4acd786a5&apiKey=f1ce823622ae4b55a2cc7cc1ca8532c5",
+    "blurb": "Carve simple blocks and print repeat patterns on fabric with safe, home-friendly inks."
+  },
+  {
+    "id": "cane-basketry",
+    "title": "Cane Basketry Essentials",
+    "artisan": "Bhola Nath",
+    "level": "All Levels",
+    "price": 350,
+    "duration": "80 min",
+    "poster": "https://images.unsplash.com/photo-1582395761748-980e5a8e5d0f?q=80&w=1920&auto=format&fit=crop",
+    "video": "https://cdn.builder.io/o/assets%2Ff1ce823622ae4b55a2cc7cc1ca8532c5%2Fe86a8089deb84d51bc4eece9e992bbc0?alt=media&token=e0941836-4c77-4002-ad9b-f8e4acd786a5&apiKey=f1ce823622ae4b55a2cc7cc1ca8532c5",
+    "blurb": "Weave durable, beautiful baskets while learning tips on materials and finishing."
+  },
+  {
+    "id": "embroidery",
+    "title": "Embroidery Stitches Pack",
+    "artisan": "Farah Ali",
+    "level": "Beginner",
+    "price": 99,
+    "duration": "50 min",
+    "poster": "https://images.unsplash.com/photo-1580920461934-6fe512ceb2d6?q=80&w=1920&auto=format&fit=crop",
+    "video": "https://cdn.builder.io/o/assets%2Ff1ce823622ae4b55a2cc7cc1ca8532c5%2Fe86a8089deb84d51bc4eece9e992bbc0?alt=media&token=e0941836-4c77-4002-ad9b-f8e4acd786a5&apiKey=f1ce823622ae4b55a2cc7cc1ca8532c5",
+    "blurb": "Master 10 fundamental stitches to embellish garments and accessories."
+  },
+  {
+    "id": "bamboo-craft",
+    "title": "Bamboo Crafting for Beginners",
+    "artisan": "Tenzin Dorjee",
+    "level": "Beginner",
+    "price": 249,
+    "duration": "70 min",
+    "poster": "https://images.unsplash.com/photo-1610439679626-cdbdbd6e7f18?q=80&w=1920&auto=format&fit=crop",
+    "video": "https://cdn.builder.io/o/assets%2Ff1ce823622ae4b55a2cc7cc1ca8532c5%2Fe86a8089deb84d51bc4eece9e992bbc0?alt=media&token=e0941836-4c77-4002-ad9b-f8e4acd786a5",
+    "blurb": "Learn how to craft eco-friendly home decor using bamboo cutting and weaving techniques."
+  },
+  {
+    "id": "glass-painting",
+    "title": "Glass Painting Workshop",
+    "artisan": "Neeta Sharma",
+    "level": "Intermediate",
+    "price": 399,
+    "duration": "90 min",
+    "poster": "https://images.unsplash.com/photo-1606312619070-199b25c9656d?q=80&w=1920&auto=format&fit=crop",
+    "video": "https://cdn.builder.io/o/assets%2Ff1ce823622ae4b55a2cc7cc1ca8532c5%2Fe86a8089deb84d51bc4eece9e992bbc0?alt=media&token=e0941836-4c77-4002-ad9b-f8e4acd786a5",
+    "blurb": "Create luminous designs on glass surfaces using vibrant colors and outlines."
+  },
+  {
+    "id": "calligraphy",
+    "title": "Creative Calligraphy Art",
+    "artisan": "Anjali Mehta",
+    "level": "All Levels",
+    "price": 299,
+    "duration": "60 min",
+    "poster": "https://images.unsplash.com/photo-1615397349753-d4e748924bbf?q=80&w=1920&auto=format&fit=crop",
+    "video": "https://cdn.builder.io/o/assets%2Ff1ce823622ae4b55a2cc7cc1ca8532c5%2Fe86a8089deb84d51bc4eece9e992bbc0?alt=media&token=e0941836-4c77-4002-ad9b-f8e4acd786a5",
+    "blurb": "Express your creativity through elegant lettering and modern calligraphy techniques."
+  },
+  {
+    "id": "soap-carving",
+    "title": "Soap Carving for Decor",
+    "artisan": "Ritu Anand",
+    "level": "Beginner",
+    "price": 179,
+    "duration": "55 min",
+    "poster": "https://images.unsplash.com/photo-1600180758890-cb6009ab6b7f?q=80&w=1920&auto=format&fit=crop",
+    "video": "https://cdn.builder.io/o/assets%2Ff1ce823622ae4b55a2cc7cc1ca8532c5%2Fe86a8089deb84d51bc4eece9e992bbc0?alt=media&token=e0941836-4c77-4002-ad9b-f8e4acd786a5",
+    "blurb": "Turn simple soap bars into beautiful flower and pattern carvings using easy hand tools."
+  }
+]
