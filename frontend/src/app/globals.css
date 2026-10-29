@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: #FEFCFB;
+  --color-foreground: #1F2937;
+
+  --color-card: #FFF7ED;
+  --color-card-foreground: #1F2937;
+
+  --color-popover: #FFF7ED;
+  --color-popover-foreground: #1F2937;
+
+  --color-primary: #D97706;
+  --color-primary-foreground: #FEFCFB;
+
+  --color-secondary: #FFF7ED;
+  --color-secondary-foreground: #1F2937;
+
+  --color-muted: #FFF7ED;
+  --color-muted-foreground: #6B7280;
+
+  --color-accent: #FFF7ED;
+  --color-accent-foreground: #1F2937;
+
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #fafafa;
+
+  --color-border: #E5E7EB;
+  --color-input: #E5E7EB;
+  --color-ring: #D97706;
+
+  --color-chart-1: #D97706;
+  --color-chart-2: #92400E;
+  --color-chart-3: #059669;
+  --color-chart-4: #1F2937;
+  --color-chart-5: #6B7280;
+
+  --color-sidebar: #FFF7ED;
+  --color-sidebar-foreground: #1F2937;
+  --color-sidebar-primary: #D97706;
+  --color-sidebar-primary-foreground: #FEFCFB;
+  --color-sidebar-accent: #FEFCFB;
+  --color-sidebar-accent-foreground: #1F2937;
+  --color-sidebar-border: #E5E7EB;
+  --color-sidebar-ring: #D97706;
+
+  --color-marketplace-primary: #D97706;
+  --color-marketplace-secondary: #92400E;
+  --color-marketplace-surface: #FFF7ED;
+  --color-marketplace-text-primary: #1F2937;
+  --color-marketplace-text-secondary: #6B7280;
+  --color-marketplace-success: #059669;
+
+  --font-display: var(--font-rajdhani), sans-serif;
+  --font-body: var(--font-rajdhani), sans-serif;
+
+  --radius-lg: 0.5rem;
+  --radius-md: calc(0.5rem - 2px);
+  --radius-sm: calc(0.5rem - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+
+    to {
+      height: 0;
+    }
+  }
+}
+
+@layer base {
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border);
+  }
+}
+
+@layer utilities {
+  body {
+    font-family: var(--font-body);
+  }
+
+  * {
+    font-family: var(--font-rajdhani), sans-serif !important;
+  }
+}
+
+@layer base {
+  :root {
+    --background: #FEFCFB;
+    --foreground: #1F2937;
+    --card: #FFF7ED;
+    --card-foreground: #1F2937;
+    --popover: #FFF7ED;
+    --popover-foreground: #1F2937;
+    --primary: #D97706;
+    --primary-foreground: #FEFCFB;
+    --secondary: #FFF7ED;
+    --secondary-foreground: #1F2937;
+    --muted: #FFF7ED;
+    --muted-foreground: #6B7280;
+    --accent: #FFF7ED;
+    --accent-foreground: #1F2937;
+    --destructive: #ef4444;
+    --destructive-foreground: #fafafa;
+    --border: #E5E7EB;
+    --input: #E5E7EB;
+    --ring: #D97706;
+    --chart-1: #D97706;
+    --chart-2: #92400E;
+    --chart-3: #059669;
+    --chart-4: #1F2937;
+    --chart-5: #6B7280;
+    --radius: 0.5rem;
+    --sidebar-background: #FFF7ED;
+    --sidebar-foreground: #1F2937;
+    --sidebar-primary: #D97706;
+    --sidebar-primary-foreground: #FEFCFB;
+    --sidebar-accent: #FEFCFB;
+    --sidebar-accent-foreground: #1F2937;
+    --sidebar-border: #E5E7EB;
+    --sidebar-ring: #D97706;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-marketplace-text-primary);
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+  }
+
+  h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  p {
+    color: var(--color-marketplace-text-secondary);
+    line-height: 1.7;
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .container {
+    margin-inline: auto;
+    padding-inline: 2rem;
+  }
+
+  /* Cultural India Map Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse-soft {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+}

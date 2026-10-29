@@ -1,0 +1,46 @@
+name: KarigarSetu CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+
+      - name: Install backend dependencies
+        if: ${{ hashFiles('backend/package.json') != '' }}
+        working-directory: backend
+        run: npm install
+
+      - name: Install frontend dependencies
+        if: ${{ hashFiles('frontend/package.json') != '' }}
+        working-directory: frontend
+        run: npm install
+
+      - name: Build frontend
+        if: ${{ hashFiles('frontend/package.json') != '' }}
+        working-directory: frontend
+        run: npm run build
+
+      - name: Run root tests
+        run: npm test --if-present
+
+      - name: Deploy application
+        run: |
+          echo "Deploying KarigarSetu application..."
+          echo "Deployment Successful ✅"

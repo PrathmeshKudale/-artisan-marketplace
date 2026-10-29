@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Store {
+  id               String   @id @default(cuid())
+  placeId          String   @unique
+  name             String
+  address          String
+  lat              Float
+  lng              Float
+  rating           Float    @default(0)
+  userRatingsTotal Int      @default(0)
+  openingHours     String? 
+  contact          String? 
+  website          String? 
+  craftTypes       String   @default("")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  reviews          Review[]
+}
+
+model Review {
+  id           String   @id @default(cuid())
+  storeId      String
+  store        Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  authorName   String?
+  rating       Int?
+  text         String?
+  relativeTime String?
+  createdAt    DateTime @default(now())
+}
