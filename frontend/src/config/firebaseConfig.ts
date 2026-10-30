@@ -12,7 +12,8 @@ const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "karigarsetu.firebasestorage.app",
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "518096117495",
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:518096117495:web:a614379facd82ed4197df2",
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-MB9M9HC65L"
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-MB9M9HC65L",
+  vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY || "BHvHdtvtVO8t7PdA3J0dqeg1zZtopX4jfT60ln4V1Fxk_ix7hIQ2VFeT3mOtJuN5J5_PgLQZzjwHb7RHqTcF2R0"
 };
 
 // Initialize Firebase app
@@ -30,4 +31,5 @@ if (typeof window !== "undefined") {
   analytics = getAnalytics(app);
 }
 
+export const vapidKey = firebaseConfig.vapidKey;
 export { app, auth, db, analytics };
