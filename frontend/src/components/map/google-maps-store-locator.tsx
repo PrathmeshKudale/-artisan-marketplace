@@ -4,6 +4,8 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import { Card } from '../ui/card';
 
+import ArtisanInteractiveMap from './artisan-interactive-map';
+
 // API response types
 interface PlacesApiResponse {
   stores: StoreLocation[];
@@ -36,6 +38,7 @@ interface MapProps {
   initialCenter?: { lat: number; lng: number };
   zoom?: number;
   stores?: StoreLocation[];
+  selectedStoreId?: string | null;
   onResults?: (stores: StoreLocation[]) => void;
 }
 
@@ -65,13 +68,11 @@ export default function StoreLocator({
   initialCenter = defaultCenter, 
   zoom = 5,
   stores = [],
+  selectedStoreId = null,
   onResults,
 }: MapProps) {
   // Use the public key for Maps JS API (maps, geocoding, etc)
   const mapsApiKey = resolveGoogleMapsApiKey();
-  if (!mapsApiKey) {
-    console.error('Missing Google Maps API key for Maps JavaScript API');
-  }
 
   const [selectedStore, setSelectedStore] = useState<StoreLocation | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -85,8 +86,6 @@ export default function StoreLocator({
 
     try {
       const url = `/api/stores?lat=${initialCenter.lat}&lng=${initialCenter.lng}&radiusKm=15`;
-      console.log('Loading stores from:', url);
-      
       const response = await fetch(url);
       const data = await response.json();
       
@@ -100,7 +99,6 @@ export default function StoreLocator({
         return;
       }
 
-      console.log('Loaded stores:', data);
       setClientStores(data.stores);
       setUsedClientFallback(!!data.fallback);
       
@@ -118,9 +116,9 @@ export default function StoreLocator({
     }
   }, [map, stores, loadStores]);
 
-  // Call the loader hook
+  // Call the loader hook unconditionally
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: mapsApiKey,
+    googleMapsApiKey: mapsApiKey || '',
     libraries: MAP_LIBRARIES as any,
     version: "weekly",
   });
@@ -135,38 +133,28 @@ export default function StoreLocator({
     setMap(null);
   }, []);
 
-  if (!mapsApiKey) {
-    return (
-      <div className="w-full h-[400px] flex items-center justify-center">
-        <Card className="p-4 bg-white shadow">
-          <h3 className="font-semibold mb-2">Google Maps API key missing</h3>
-          <p className="text-sm text-gray-700 mb-2">
-            Set <code>NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code> in <code>.env.local</code> for local development, or in your deployment&apos;s environment variables and redeploy.
-          </p>
-          <pre className="text-xs bg-gray-100 p-2 rounded">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=YOUR_KEY_HERE</pre>
-          <p className="text-xs text-gray-500 mt-2">Use <code>.env.example</code> as a template.</p>
-        </Card>
-      </div>
-    );
-  }
+  const displayedStores = stores?.length > 0 ? stores : clientStores;
 
-  if (loadError) {
+  // Seamless fallback to interactive OpenStreetMap if Google Maps API key is not configured or fails
+  if (!mapsApiKey || loadError) {
     return (
-      <div className="w-full h-[400px] flex items-center justify-center">
-        <Card className="p-4 bg-white shadow">
-          <h3 className="font-semibold mb-2">Error loading Google Maps</h3>
-          <p className="text-sm text-gray-700">{String(loadError)}</p>
-          <p className="text-xs text-gray-500 mt-2">Check that the Maps JavaScript API is enabled, billing is active, and the browser key is allowed for this origin in Google Cloud Console.</p>
-        </Card>
-      </div>
+      <ArtisanInteractiveMap
+        initialCenter={initialCenter}
+        zoom={zoom}
+        stores={displayedStores}
+        selectedStoreId={selectedStoreId}
+        onSelectStore={(st) => setSelectedStore(st)}
+      />
     );
   }
 
   if (!isLoaded) {
-    return <div>Loading maps...</div>;
+    return (
+      <div className="w-full h-[600px] flex items-center justify-center bg-gray-50 rounded-xl">
+        <p className="text-sm text-gray-500">Loading maps...</p>
+      </div>
+    );
   }
-
-  const displayedStores = stores?.length > 0 ? stores : clientStores;
 
   return (
     <div className="w-full h-[600px] relative">

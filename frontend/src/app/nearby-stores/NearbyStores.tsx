@@ -28,8 +28,8 @@ type Store = {
 };
 
 export default function NearbyStoresPage() {
-  // use local stub `t` defined above; if you later add a LanguageContext, replace this.
   const [stores, setStores] = useState<Store[]>([]);
+  const [selectedStoreId, setSelectedStoreId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
 
@@ -37,14 +37,10 @@ export default function NearbyStoresPage() {
     const load = async () => {
       try {
         setLoading(true);
-        console.log('Fetching stores...');
         const resp = await fetch(`/api/stores?city=pune&radiusKm=15`);
-        console.log('Response status:', resp.status);
         const json = await resp.json();
-        console.log('Response data:', json);
         
         if (!resp.ok) {
-          // If the server returned structured details for Google Places, include them in the error
           const msgParts: string[] = [];
           if (json?.error) msgParts.push(json.error);
           if (json?.googleStatus) msgParts.push(`googleStatus=${json.googleStatus}`);
@@ -52,17 +48,11 @@ export default function NearbyStoresPage() {
           if (json?.details) msgParts.push(`details=${JSON.stringify(json.details)}`);
           
           const errorMessage = msgParts.join(' | ') || 'Failed to load stores';
-          console.error('Store loading error:', errorMessage);
           throw new Error(errorMessage);
         }
 
-        if (!json.stores || json.stores.length === 0) {
-          console.log('No stores returned from API');
-        }
-        
         setStores(json.stores || []);
       } catch (e: any) {
-        // Store the full error message (including Google details when available) so UI can display it
         setError(e.message || 'Failed to load stores');
       } finally {
         setLoading(false);
@@ -79,71 +69,77 @@ export default function NearbyStoresPage() {
         <div className="container mx-auto py-4">
           <BackButton />
         </div>
-        {/* Hero Section — simplified to surface the map immediately */}
-        <section className="py-8">
+        {/* Hero Section */}
+        <section className="py-6">
           <div className="container mx-auto text-center">
-            <Badge variant="outline" className="mb-4 bg-orange-100 text-orange-700 border-orange-200">
+            <Badge variant="outline" className="mb-3 bg-orange-100 text-orange-700 border-orange-200">
               <Clock className="w-4 h-4 mr-2" />
-              Nearby Stores
+              Neighborhood Artisans
             </Badge>
 
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+            <h1 className="text-3xl md:text-5xl font-bold text-gray-800 mb-3" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
               Nearby Stores
             </h1>
-            <div className="mb-2">
-              <span className="text-xs text-gray-500">UI version: nearby-stores-v2 (updated 2025-10-31)</span>
-            </div>
 
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-6" style={{ fontFamily: 'Poppins, sans-serif' }}>
-              Discover authentic handcrafted treasures in your neighborhood. The map below shows real stores near Pune (client-side search enabled).
+            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
+              Discover authentic handcrafted treasures in your neighborhood. Explore real verified artisan stores across Pune.
             </p>
           </div>
         </section>
 
         {/* Map + List */}
-        <section className="py-8">
+        <section className="pb-12">
           <div className="container mx-auto grid grid-cols-1 lg:grid-cols-5 gap-8">
             <div className="lg:col-span-3">
               <StoreLocator
                 initialCenter={{ lat: 18.5204, lng: 73.8567 }}
                 zoom={13}
                 stores={stores}
+                selectedStoreId={selectedStoreId}
                 onResults={(results) => setStores(results)}
               />
             </div>
             <div className="lg:col-span-2">
-              <Card className="p-0 h-[600px] overflow-hidden">
-                <CardHeader className="p-4 border-b bg-white/60">
+              <Card className="p-0 h-[600px] overflow-hidden shadow-lg border-amber-200">
+                <CardHeader className="p-4 border-b bg-amber-50/50">
                   <div className="flex items-center justify-between">
                     <div>
-                      <CardTitle className="text-lg mb-0" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
-                        {t('nearby.list.title') || 'Pune artisan stores'}
+                      <CardTitle className="text-lg mb-0 text-gray-900" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+                        Pune Artisan Stores
                       </CardTitle>
-                      <CardDescription className="text-sm text-gray-600">{t('nearby.list.subtitle') || 'Real places from Google with reviews'}</CardDescription>
+                      <CardDescription className="text-xs text-gray-600">Click any store to locate on map</CardDescription>
                     </div>
-                    <div className="text-sm text-gray-500">{stores.length} shown</div>
+                    <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-800 font-semibold">{stores.length} stores</Badge>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-4 p-3 overflow-y-auto h-[520px]">
-                  {loading && <p>Loading stores…</p>}
+                <CardContent className="space-y-3 p-3 overflow-y-auto h-[520px]">
+                  {loading && <p className="text-center py-8 text-gray-500 text-sm">Loading artisan stores…</p>}
                   {error && (
                     <div className="text-sm text-red-600">
                       <p className="font-semibold">Error loading stores:</p>
                       <pre className="whitespace-pre-wrap text-xs mt-1">{error}</pre>
                     </div>
                   )}
-                  {!loading && !error && stores.length === 0 && <p>No stores found.</p>}
+                  {!loading && !error && stores.length === 0 && <p className="text-center py-8 text-gray-500 text-sm">No stores found.</p>}
                   {!loading && !error && stores.map((s) => (
-                    <div key={s.id} className="border rounded-lg p-3 bg-white/80">
+                    <div
+                      key={s.id}
+                      onClick={() => setSelectedStoreId(s.id)}
+                      className={`border rounded-lg p-3 cursor-pointer transition-all ${
+                        selectedStoreId === s.id
+                          ? "bg-amber-50/90 border-amber-500 shadow-md ring-2 ring-amber-300"
+                          : "bg-white/90 hover:bg-amber-50/50 hover:border-amber-300 shadow-sm"
+                      }`}
+                    >
                       <div className="flex items-center justify-between gap-4">
                         <div className="flex-1 min-w-0">
-                          <p className="font-semibold text-left truncate">{s.name}</p>
-                          <p className="text-sm text-gray-600 truncate">{s.address}</p>
+                          <p className="font-semibold text-gray-900 text-sm truncate">{s.name}</p>
+                          <p className="text-xs text-gray-600 truncate mt-0.5">{s.address}</p>
                         </div>
-                        <div className="text-right w-24 flex-shrink-0">
-                          <p className="text-sm font-medium">⭐ {s.rating?.toFixed ? s.rating.toFixed(1) : s.rating}</p>
+                        <div className="text-right w-20 flex-shrink-0">
+                          <p className="text-xs font-semibold text-amber-700">⭐ {s.rating?.toFixed ? s.rating.toFixed(1) : s.rating}</p>
                           {!!s.userRatingsTotal && (
-                            <p className="text-xs text-gray-500">{s.userRatingsTotal} reviews</p>
+                            <p className="text-[11px] text-gray-500">{s.userRatingsTotal} reviews</p>
                           )}
                         </div>
                       </div>
