@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
   GoogleAuthProvider,
@@ -8,6 +8,8 @@ import {
   signInWithEmailAndPassword,
   signInWithPhoneNumber,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
 } from "firebase/auth";
 import type { ConfirmationResult } from "firebase/auth";
 import { auth } from "@/config/firebaseConfig";
@@ -31,11 +33,18 @@ import { saveVerifiedUserSession } from "@/lib/firebase-auth-session";
 import { trackAuthAction } from "@/lib/gtag";
 
 type UserType = "user" | "artisan" | null;
+type AccountType = Exclude<UserType, null>;
 type AuthMode = "email" | "phone";
+type PendingGoogleSignIn = {
+  userType: AccountType;
+  redirectUrl: string;
+};
 
 type AuthWindow = Window & {
   recaptchaVerifier?: RecaptchaVerifier;
 };
+
+const PENDING_GOOGLE_SIGN_IN_KEY = "pending-google-sign-in";
 
 export default function SignInPage() {
   const [userType, setUserType] = useState<UserType>(null);
@@ -52,14 +61,68 @@ export default function SignInPage() {
   const { signIn } = useAuth();
   const router = useRouter();
   const [redirectUrl, setRedirectUrl] = useState<string>("/");
+  const googleRedirectHandled = useRef(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const redirect = params.get("redirect");
-    if (redirect) {
+    if (redirect?.startsWith("/") && !redirect.startsWith("//")) {
       setRedirectUrl(redirect);
     }
   }, []);
+
+  useEffect(() => {
+    if (googleRedirectHandled.current) return;
+
+    const storedPendingSignIn = sessionStorage.getItem(PENDING_GOOGLE_SIGN_IN_KEY);
+    if (!storedPendingSignIn) return;
+    googleRedirectHandled.current = true;
+
+    let pendingSignIn: PendingGoogleSignIn;
+    try {
+      const parsed = JSON.parse(storedPendingSignIn) as Partial<PendingGoogleSignIn>;
+      if (
+        (parsed.userType !== "user" && parsed.userType !== "artisan") ||
+        typeof parsed.redirectUrl !== "string" ||
+        !parsed.redirectUrl.startsWith("/") ||
+        parsed.redirectUrl.startsWith("//")
+      ) {
+        throw new Error("Invalid pending Google sign-in state");
+      }
+      pendingSignIn = {
+        userType: parsed.userType,
+        redirectUrl: parsed.redirectUrl,
+      };
+    } catch (error) {
+      sessionStorage.removeItem(PENDING_GOOGLE_SIGN_IN_KEY);
+      console.error("Unable to restore Google sign-in state:", error);
+      return;
+    }
+
+    const completeGoogleRedirect = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        sessionStorage.removeItem(PENDING_GOOGLE_SIGN_IN_KEY);
+        if (!result) return;
+
+        await saveVerifiedUserSession({
+          firebaseUser: result.user,
+          signIn,
+          userType: pendingSignIn.userType,
+        });
+        trackAuthAction("login", "google", pendingSignIn.userType);
+        router.replace(pendingSignIn.redirectUrl);
+      } catch (error: unknown) {
+        sessionStorage.removeItem(PENDING_GOOGLE_SIGN_IN_KEY);
+        console.error("Google redirect sign-in error:", error);
+        alert(error instanceof Error && error.message === "Server returned non-JSON response"
+          ? "Unable to connect to the authentication server. Please try again later."
+          : getFirebaseAuthErrorMessage(error));
+      }
+    };
+
+    void completeGoogleRedirect();
+  }, [router, signIn]);
 
   useEffect(() => {
     setFormErrors({});
@@ -173,11 +236,39 @@ export default function SignInPage() {
   };
 
   const handleGoogleSignIn = async () => {
+    if (!userType) return;
+
+    const provider = new GoogleAuthProvider();
     try {
-      const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       await saveVerifiedUser(result.user, "google");
     } catch (err: unknown) {
+      const errorCode =
+        typeof err === "object" && err !== null && "code" in err
+          ? err.code
+          : undefined;
+
+      if (errorCode === "auth/popup-blocked") {
+        const pendingSignIn: PendingGoogleSignIn = {
+          userType,
+          redirectUrl,
+        };
+        sessionStorage.setItem(
+          PENDING_GOOGLE_SIGN_IN_KEY,
+          JSON.stringify(pendingSignIn)
+        );
+
+        try {
+          await signInWithRedirect(auth, provider);
+          return;
+        } catch (redirectError) {
+          sessionStorage.removeItem(PENDING_GOOGLE_SIGN_IN_KEY);
+          console.error("Google redirect sign-in error:", redirectError);
+          alert(getFirebaseAuthErrorMessage(redirectError));
+          return;
+        }
+      }
+
       const error = err as Error;
       console.error("Google Sign-in Error:", error);
       alert(error.message === "Server returned non-JSON response"

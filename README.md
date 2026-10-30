@@ -111,6 +111,8 @@ The `BACKEND_URL` value is injected by Vercel and should not be configured manua
 
 Run `vercel dev` from the repository root to test both services and their binding locally. Configure the application secrets (such as Firebase Admin credentials and AI/payment API keys) in the appropriate Vercel service environments; do not add `BACKEND_URL` manually.
 
+For the Nearby Stores map in production, add `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` to the frontend service's Production environment variables in Vercel, then redeploy. A local `.env.local` value is not uploaded with Git. Restrict the browser key in Google Cloud to the Maps JavaScript API and your deployed site origins.
+
 ### Language Composition
 - **TypeScript**: 92.1%
 - **JavaScript**: 7.2%
@@ -154,4 +156,3 @@ The repo loads `.env.local` and `.env` automatically in both the frontend and ba
 # RAZORPAY_KEY_ID=...
 # RAZORPAY_KEY_SECRET=...
 ```
-

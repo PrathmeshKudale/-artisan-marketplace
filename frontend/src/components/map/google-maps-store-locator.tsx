@@ -140,7 +140,9 @@ export default function StoreLocator({
       <div className="w-full h-[400px] flex items-center justify-center">
         <Card className="p-4 bg-white shadow">
           <h3 className="font-semibold mb-2">Google Maps API key missing</h3>
-          <p className="text-sm text-gray-700 mb-2">Add your key to <code>.env.local</code>:</p>
+          <p className="text-sm text-gray-700 mb-2">
+            Set <code>NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code> in <code>.env.local</code> for local development, or in your deployment&apos;s environment variables and redeploy.
+          </p>
           <pre className="text-xs bg-gray-100 p-2 rounded">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=YOUR_KEY_HERE</pre>
           <p className="text-xs text-gray-500 mt-2">Use <code>.env.example</code> as a template.</p>
         </Card>

@@ -80,7 +80,7 @@ const SocialTeamProfiles = () => {
   const currentArtisan = artisans[currentSlide];
 
   return (
-    <section className="py-16 mt-2 bg-background border-t border-amber-200/50">
+    <section id="artisans" className="scroll-mt-24 py-16 mt-2 bg-background border-t border-amber-200/50">
       <div className="container mx-auto">
         <div className="flex flex-col gap-6 py-4 lg:py-8 text-center">
           <h2 className="text-3xl leading-tight tracking-tight md:text-4xl lg:text-6xl font-display">

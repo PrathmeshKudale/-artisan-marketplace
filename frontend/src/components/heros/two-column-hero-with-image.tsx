@@ -81,11 +81,14 @@ const TwoColumnHeroWithImage = () => {
               </Link>
             </Button>
             <Button
+              asChild
               size="lg"
               className="w-full sm:w-auto group bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full px-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 backdrop-blur-sm"
             >
-              Learn About Artisans
-              <ArrowUpRight className="ml-2 size-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <Link href="#artisans">
+                Learn About Artisans
+                <ArrowUpRight className="ml-2 size-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </Link>
             </Button>
           </div>
 
