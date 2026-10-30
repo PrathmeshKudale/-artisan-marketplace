@@ -28,6 +28,25 @@ const loadEnvFile = (filePath: string) => {
   }
 };
 
+const resolveGoogleMapsApiKey = () => {
+  const candidateKeys = [
+    "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY",
+    "GOOGLE_MAPS_API_KEY",
+    "find_nearby_stores_api_key",
+    "Places_API_key",
+    "browser_key",
+  ];
+
+  for (const key of candidateKeys) {
+    const value = process.env[key];
+    if (typeof value === "string" && value.trim()) {
+      return value.trim();
+    }
+  }
+
+  return "";
+};
+
 loadEnvFile(path.resolve(__dirname, "..", ".env.local"));
 loadEnvFile(path.resolve(__dirname, "..", ".env"));
 
@@ -37,12 +56,7 @@ const nextConfig: NextConfig = {
     "https://96019316915249fd93e21677f8c6e329-b2082856-7703-4295-ad61-ba9c21.projects.builder.codes"
   ],
   env: {
-    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:
-      process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
-      process.env.find_nearby_stores_api_key ||
-      process.env.Places_API_key ||
-      process.env.browser_key ||
-      "",
+    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: resolveGoogleMapsApiKey(),
     NEXT_PUBLIC_RAZORPAY_KEY_ID:
       process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
       process.env.razorpay_live_key ||

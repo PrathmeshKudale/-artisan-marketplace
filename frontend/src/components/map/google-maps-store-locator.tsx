@@ -42,6 +42,25 @@ interface MapProps {
 const defaultCenter = { lat: 20.5937, lng: 78.9629 }; // Center of India
 const MAP_LIBRARIES = ['places'] as const;
 
+const resolveGoogleMapsApiKey = () => {
+  const candidateKeys = [
+    'NEXT_PUBLIC_GOOGLE_MAPS_API_KEY',
+    'GOOGLE_MAPS_API_KEY',
+    'find_nearby_stores_api_key',
+    'Places_API_key',
+    'browser_key',
+  ];
+
+  for (const key of candidateKeys) {
+    const value = process.env[key];
+    if (typeof value === 'string' && value.trim()) {
+      return value.trim();
+    }
+  }
+
+  return '';
+};
+
 export default function StoreLocator({ 
   initialCenter = defaultCenter, 
   zoom = 5,
@@ -49,9 +68,9 @@ export default function StoreLocator({
   onResults,
 }: MapProps) {
   // Use the public key for Maps JS API (maps, geocoding, etc)
-  const mapsApiKey = String(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '');
+  const mapsApiKey = resolveGoogleMapsApiKey();
   if (!mapsApiKey) {
-    console.error('Missing NEXT_PUBLIC_GOOGLE_MAPS_API_KEY for Maps JavaScript API');
+    console.error('Missing Google Maps API key for Maps JavaScript API');
   }
 
   const [selectedStore, setSelectedStore] = useState<StoreLocation | null>(null);
