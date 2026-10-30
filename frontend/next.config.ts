@@ -47,14 +47,6 @@ const nextConfig: NextConfig = {
       process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
       process.env.razorpay_live_key ||
       "",
-    NEXT_PUBLIC_API_URL:
-      process.env.NEXT_PUBLIC_API_URL ||
-      process.env.NEXT_PUBLIC_BACKEND_URL ||
-      "http://localhost:5000",
-    NEXT_PUBLIC_BACKEND_URL:
-      process.env.NEXT_PUBLIC_BACKEND_URL ||
-      process.env.NEXT_PUBLIC_API_URL ||
-      "http://localhost:5000",
   },
   images: {
     remotePatterns: [

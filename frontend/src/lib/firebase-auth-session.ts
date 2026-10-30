@@ -17,10 +17,6 @@ type SaveVerifiedUserParams = {
   fallbackPhone?: string;
 };
 
-function getApiUrl() {
-  return process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-}
-
 export async function saveVerifiedUserSession({
   firebaseUser,
   signIn,
@@ -30,7 +26,7 @@ export async function saveVerifiedUserSession({
   fallbackPhone,
 }: SaveVerifiedUserParams) {
   const idToken = await firebaseUser.getIdToken();
-  const response = await fetch(`${getApiUrl()}/verify-token`, {
+  const response = await fetch("/api/backend/verify-token", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -89,8 +89,9 @@ export default function ArtworkDetailPage({ artwork }: ArtworkDetailPageProps) {
       if (!artwork?.id) return;
       try {
         setRecLoading(true);
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-        const res = await fetch(`${apiUrl}/recommendations?artworkId=${artwork.id}`);
+        const res = await fetch(
+          `/api/backend/recommendations?artworkId=${encodeURIComponent(String(artwork.id))}`
+        );
         const json = await res.json();
         if (json?.success && Array.isArray(json.recommendations)) {
           setRecommendations(json.recommendations);

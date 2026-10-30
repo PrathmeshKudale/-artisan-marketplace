@@ -47,8 +47,6 @@ export default function CartClient() {
   };
 
   const onPromoChange = (e: ChangeEvent<HTMLInputElement>) => setPromoCode(e.target.value);
-  const backendBase = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
-
   const sendOrderConfirmationEmail = async ({
     orderId,
     trackingId,
@@ -70,7 +68,7 @@ export default function CartClient() {
     if (!user?.email) return;
 
     try {
-      await fetch(`${backendBase}/orders/confirmation-email`, {
+      await fetch("/api/backend/orders/confirmation-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

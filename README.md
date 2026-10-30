@@ -103,8 +103,13 @@ The platform leverages:
 - **Firestore**: NoSQL document database for user data, orders, artworks, and transactions
 
 ### Deployment
-- **Frontend**: Vercel
-- **Backend**: Node.js server (Express)
+- **Platform**: Vercel multi-service project configured in `vercel.json`
+- **Frontend**: Public Next.js service at `/`
+- **Backend**: Internal Express service, called by the frontend through the `BACKEND_URL` service binding
+
+The `BACKEND_URL` value is injected by Vercel and should not be configured manually. Frontend browser requests to the backend use the Next.js `/api/backend/*` proxy, which keeps the internal service URL server-side. For local development outside `vercel dev`, the proxy falls back to `http://localhost:5000`.
+
+Run `vercel dev` from the repository root to test both services and their binding locally. Configure the application secrets (such as Firebase Admin credentials and AI/payment API keys) in the appropriate Vercel service environments; do not add `BACKEND_URL` manually.
 
 ### Language Composition
 - **TypeScript**: 92.1%

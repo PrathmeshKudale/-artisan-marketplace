@@ -114,8 +114,6 @@ const AnimatedIndicatorNavbar = () => {
     { code: "en", label: "English" },
   ];
 
-  const BACKEND_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
-
   async function translatePage(target: string) {
     try {
       if (target === "en") {
@@ -264,7 +262,7 @@ const AnimatedIndicatorNavbar = () => {
       const uncachedTexts = uniqueTexts.filter((text) => !targetCache[text]);
 
       if (uncachedTexts.length) {
-        const res = await fetch(`${BACKEND_BASE}/translate`, {
+        const res = await fetch("/api/backend/translate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: uncachedTexts, target }),

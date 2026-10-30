@@ -68,16 +68,13 @@ export default function AiChatbotWidget() {
     }
   }, []);
 
-  const getServerUrl = () => process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
   const sendToGemini = async (userMessage: string) => {
     const controller = new AbortController();
     const timeoutId = window.setTimeout(() => controller.abort(), 20000);
     setRequestController(controller);
 
     try {
-      const serverUrl = getServerUrl();
-      const res = await fetch(`${serverUrl}/chat`, {
+      const res = await fetch("/api/backend/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMessage }),
@@ -191,9 +188,8 @@ export default function AiChatbotWidget() {
   };
 
   const handleClearChat = async () => {
-    const serverUrl = getServerUrl();
     try {
-      await fetch(`${serverUrl}/clear-cache`, { method: "POST" });
+      await fetch("/api/backend/clear-cache", { method: "POST" });
     } catch {
       // ignore
     }

@@ -30,7 +30,7 @@ export default function PageTranslator() {
       setLastCount(texts.length);
 
       // send to backend translate endpoint
-      const res = await fetch("/translate", {
+      const res = await fetch("/api/backend/translate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: texts, target }),
