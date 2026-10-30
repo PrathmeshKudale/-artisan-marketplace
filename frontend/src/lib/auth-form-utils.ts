@@ -273,6 +273,8 @@ export function getFirebaseAuthErrorMessage(error: unknown) {
       return "This OTP has expired. Request a new one and try again.";
     case "auth/credential-already-in-use":
       return "This phone number is already linked to another account.";
+    case "auth/unauthorized-domain":
+      return "This domain (artisan-marketplace-main.vercel.app) is not authorized in Firebase Console. Please add it under Firebase Console > Authentication > Settings > Authorized Domains.";
     case "auth/popup-closed-by-user":
       return "The sign-in popup was closed before completing sign-in.";
     default:
