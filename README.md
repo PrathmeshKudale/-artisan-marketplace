@@ -133,3 +133,25 @@ Run `vercel dev` from the repository root to test both services and their bindin
 ```bash
 git clone https://github.com/aadya284/artisan-marketplace.git
 cd artisan-marketplace
+```
+
+#### 2. Configure environment variables
+Copy the example file to a real local env file before starting the app:
+
+```bash
+cp .env.example .env.local
+```
+
+Then fill in the required secrets for Firebase, Google Cloud, Razorpay and SMTP in `.env.local`.
+
+The repo loads `.env.local` and `.env` automatically in both the frontend and backend, so the same keys can be shared across services when needed.
+
+```bash
+# Example values
+# NEXT_PUBLIC_FIREBASE_API_KEY=...
+# NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=...
+# GEMINI_API_KEY=...
+# RAZORPAY_KEY_ID=...
+# RAZORPAY_KEY_SECRET=...
+```
+
