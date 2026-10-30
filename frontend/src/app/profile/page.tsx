@@ -2,7 +2,8 @@
 
 import { AnimatedIndicatorNavbar } from "@/components/navbars/animated-indicator-navbar";
 import { useAuth } from "@/contexts/AuthContext";
-import { User as UserIcon, Mail, Badge } from "lucide-react";
+import { User as UserIcon, Mail } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import MessageInbox from "@/components/messaging/message-inbox";

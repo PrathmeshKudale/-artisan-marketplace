@@ -33,16 +33,20 @@ export default function CartClient() {
     } catch {}
   }, [searchParams]);
 
+  const [discountRate, setDiscountRate] = useState<number>(0);
+
   const subtotal = cartItems.reduce((s, i) => s + i.price * i.quantity, 0);
+  const discount = Math.round(subtotal * discountRate);
   const shipping = subtotal > 10000 ? 0 : 199;
-  const tax = Math.round(subtotal * 0.18);
-  const total = subtotal + shipping + tax;
+  const tax = Math.round((subtotal - discount) * 0.18);
+  const total = Math.max(0, subtotal - discount + shipping + tax);
 
   const applyPromoCode = () => {
-    if (promoCode === "ARTISAN20") {
-      alert("Promo applied: 20% (demo)");
+    if (promoCode.trim().toUpperCase() === "ARTISAN20") {
+      setDiscountRate(0.2);
+      alert("Promo applied: 20% discount on handcrafted items!");
     } else if (promoCode !== "") {
-      alert("Promo code not recognized");
+      alert("Promo code not recognized. Use ARTISAN20 for 20% off.");
     }
   };
 
@@ -169,14 +173,19 @@ export default function CartClient() {
 
           <aside className="bg-white p-6 rounded shadow">
             <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
-            <div className="mb-2">Subtotal: <strong>₹{subtotal.toLocaleString()}</strong></div>
-            <div className="mb-2">Shipping: <strong>{shipping === 0 ? 'FREE' : `₹${shipping}`}</strong></div>
-            <div className="mb-4">Tax: <strong>₹{tax.toLocaleString()}</strong></div>
+            <div className="mb-2 flex justify-between"><span>Subtotal:</span> <strong>₹{subtotal.toLocaleString()}</strong></div>
+            {discount > 0 && (
+              <div className="mb-2 flex justify-between text-green-600">
+                <span>Artisan Promo (20%):</span> <strong>-₹{discount.toLocaleString()}</strong>
+              </div>
+            )}
+            <div className="mb-2 flex justify-between"><span>Shipping:</span> <strong>{shipping === 0 ? 'FREE' : `₹${shipping}`}</strong></div>
+            <div className="mb-4 flex justify-between"><span>Tax (18%):</span> <strong>₹{tax.toLocaleString()}</strong></div>
             <hr className="my-4" />
-            <div className="mb-4 text-lg">Total: <strong>₹{total.toLocaleString()}</strong></div>
+            <div className="mb-4 text-lg flex justify-between"><span>Total:</span> <strong>₹{total.toLocaleString()}</strong></div>
 
             <div className="mb-4">
-              <Input placeholder="Promo code" value={promoCode} onChange={onPromoChange} />
+              <Input placeholder="Promo code (e.g. ARTISAN20)" value={promoCode} onChange={onPromoChange} />
               <div className="mt-2">
                 <Button size="sm" onClick={applyPromoCode}>Apply</Button>
               </div>
@@ -195,7 +204,7 @@ export default function CartClient() {
                         amount={total}
                             autoStart={autoStartPayment}
                         onSuccess={async (res) => {
-                          alert('Payment successful (demo)');
+                          alert('Payment successful! Your order has been placed.');
                           await finalizeOrder('online', null);
                         }}
                         onError={(err) => {
